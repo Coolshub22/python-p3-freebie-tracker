@@ -16,7 +16,7 @@ class Company(Base):
     name = Column(String())
     founding_year = Column(Integer())
 
-    freebies = relationship('Freebie', backref='company')
+    freebies = relationship('Freebie', back_populates='company')
 
     def __repr__(self):
         return f'<Company {self.name}>'
@@ -36,7 +36,7 @@ class Dev(Base):
     id = Column(Integer(), primary_key=True)
     name= Column(String())
 
-    freebies = relationship('Freebie', backref='dev')
+    freebies = relationship('Freebie', back_populates='dev')
 
     def __repr__(self):
         return f'<Dev {self.name}>'
@@ -66,8 +66,8 @@ class Freebie(Base):
     dev_id = Column(Integer, ForeignKey('devs.id'))
     company_id = Column(Integer, ForeignKey('companies.id'))
 
-    dev = relationship('Dev', backref='freebies')
-    company = relationship('Company', backref='freebies')
+    dev = relationship('Dev', back_populates='freebies')
+    company = relationship('Company', back_populates='freebies')
 
     def __repr__(self):
         return f'<Freebie {self.item_name} owned by {self.dev.name} from {self.company.name}>'
